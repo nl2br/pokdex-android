@@ -4,22 +4,28 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class PokeCard{
+public class PokeCard implements Serializable {
 
     private String id;
     private String name;
     private String imageUrl;
     private String hp;
-    private List<String> types;
-    private List<Attack> attacks;
-    private List<Resistance> resistances;
-    private List<Weakness> weaknesses;
+    private List<String> types = new ArrayList<String>();
+    private List<Attack> attacks = new ArrayList<Attack>();
+    private List<Resistance> resistances = new ArrayList<Resistance>();
+    private List<Weakness> weaknesses = new ArrayList<Weakness>();
 
 
-    public PokeCard(String name) {
+    public PokeCard(String name, String id, String type, String hp) {
+
         this.name = name;
+        this.id = id;
+        this.types.add(type);
+        this.hp = hp;
     }
 
     public void setId(String id) {

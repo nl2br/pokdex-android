@@ -25,13 +25,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getActionBar().show();
-
         for (int i = 0; i <= 100; i++) {
-            addPokeCard("test" + i);
+            addPokeCard("test" + i, "0000"+i, "Pokemon", "100" );
         }
 
-        final PokeListRecyclerViewAdapter pokeListRecyclerViewAdapter = new PokeListRecyclerViewAdapter(pokeCards);
+        final PokeListRecyclerViewAdapter pokeListRecyclerViewAdapter = new PokeListRecyclerViewAdapter(pokeCards, this);
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this,4);
 
@@ -55,8 +53,8 @@ public class MainActivity extends Activity {
         });
     }
 
-    void addPokeCard(String name){
-        PokeCard pokeCard = new PokeCard(name);
+    void addPokeCard(String name, String id, String type, String hp){
+        PokeCard pokeCard = new PokeCard(name, id, type, hp);
         Log.d(TAG, "pokeCard details " + pokeCard.getName());
         pokeCards.add(pokeCard);
     }

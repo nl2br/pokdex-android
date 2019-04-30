@@ -1,5 +1,7 @@
 package fr.mds.pokedex.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.mds.pokedex.R;
+import fr.mds.pokedex.activity.DetailPokeCardActivity;
+import fr.mds.pokedex.activity.MainActivity;
 import fr.mds.pokedex.viewHolder.PokeListViewHolder;
 import fr.mds.pokedex.model.PokeCard;
 
@@ -19,9 +23,11 @@ public class PokeListRecyclerViewAdapter extends RecyclerView.Adapter<PokeListVi
     private ArrayList<PokeCard> pokeCards;
     //private View.OnClickListener onClickListener;
     public static final String TAG = "pokedex";
+    private Activity currentActivity;
 
-    public PokeListRecyclerViewAdapter(ArrayList<PokeCard> pokeCards){
+    public PokeListRecyclerViewAdapter(ArrayList<PokeCard> pokeCards, Activity currentActivity){
         this.pokeCards = pokeCards;
+        this.currentActivity = currentActivity;
     }
 
     @Override
@@ -31,7 +37,14 @@ public class PokeListRecyclerViewAdapter extends RecyclerView.Adapter<PokeListVi
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "item clicked " + pokeCards.get(holder.getAdapterPosition()).getName());
-               // onClickListener.onClick(v);
+                // onClickListener.onClick(v);
+                // explicit car on spécifie quelle classe utliser
+                Intent intent = new Intent(currentActivity, DetailPokeCardActivity.class);
+                Log.d(TAG, "onClick" + position);
+                intent.putExtra("position",holder.getAdapterPosition());
+                intent.putExtra("pokeCard", pokeCards.get(holder.getAdapterPosition()));
+                //startActivity(intent);
+                currentActivity.startActivityForResult(intent,0);
             }
         });
     }
