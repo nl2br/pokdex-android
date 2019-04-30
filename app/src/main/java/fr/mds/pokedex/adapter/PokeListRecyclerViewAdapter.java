@@ -36,15 +36,15 @@ public class PokeListRecyclerViewAdapter extends RecyclerView.Adapter<PokeListVi
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "item clicked " + pokeCards.get(holder.getAdapterPosition()).getName());
-                // onClickListener.onClick(v);
-                // explicit car on spécifie quelle classe utliser
-                Intent intent = new Intent(currentActivity, DetailPokeCardActivity.class);
-                Log.d(TAG, "onClick" + position);
-                intent.putExtra("position",holder.getAdapterPosition());
-                intent.putExtra("pokeCard", pokeCards.get(holder.getAdapterPosition()));
-                //startActivity(intent);
-                currentActivity.startActivityForResult(intent,0);
+            Log.d(TAG, "item clicked " + pokeCards.get(holder.getAdapterPosition()).getName());
+            // onClickListener.onClick(v);
+            // explicit car on spécifie quelle classe utliser
+            Intent intent = new Intent(currentActivity, DetailPokeCardActivity.class);
+            Log.d(TAG, "onClick " + position);
+            intent.putExtra("position",holder.getAdapterPosition());
+            intent.putExtra("pokeCard", pokeCards.get(holder.getAdapterPosition()));
+            //startActivity(intent);
+            currentActivity.startActivityForResult(intent,0);
             }
         });
     }

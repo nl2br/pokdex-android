@@ -20,12 +20,13 @@ public class PokeCard implements Serializable {
     private List<Weakness> weaknesses = new ArrayList<Weakness>();
 
 
-    public PokeCard(String name, String id, String type, String hp) {
+    public PokeCard(String name, String id, String type, String hp, List<Attack> attack) {
 
         this.name = name;
         this.id = id;
         this.types.add(type);
         this.hp = hp;
+        this.attacks = attack;
     }
 
     public void setId(String id) {
@@ -63,5 +64,33 @@ public class PokeCard implements Serializable {
 
     public List<Weakness> getWeaknesses() {
         return weaknesses;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setHp(String hp) {
+        this.hp = hp;
+    }
+
+    public void setTypes(List<String> types) {
+        this.types = types;
+    }
+
+    public void setAttacks(List<Attack> attacks) {
+        this.attacks = attacks;
+    }
+
+    public void setResistances(List<Resistance> resistances) {
+        this.resistances = resistances;
+    }
+
+    public void setWeaknesses(List<Weakness> weaknesses) {
+        this.weaknesses = weaknesses;
     }
 }

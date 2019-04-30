@@ -28,7 +28,7 @@ public class DetailPokeCardActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "Details" );
         setContentView(R.layout.detail_card_view);
 
         tv_card_name = findViewById(R.id.tv_card_name);
@@ -57,7 +57,7 @@ public class DetailPokeCardActivity extends Activity {
             Log.d(TAG, "Position: " + position );
 
             PokeCard pokeCard = (PokeCard) extras.getSerializable("pokeCard");
-            Log.d(TAG, "pokeCard: " + pokeCard);
+            Log.d(TAG, "current pokeCard: " + pokeCard);
 
             currentCard = pokeCard;
 

@@ -1,10 +1,17 @@
 package fr.mds.pokedex.model;
 
-public class Attack {
+import java.io.Serializable;
+
+public class Attack implements Serializable {
     private String attack;
 
     public Attack(String attack){
         this.attack = attack;
     }
+
+    public String getAttack() {
+        return attack;
+    }
+
 }
 
