@@ -3,8 +3,10 @@ package fr.mds.pokedex.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import fr.mds.pokedex.model.Attack;
 import fr.mds.pokedex.model.PokeCard;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private ArrayList<PokeCard> pokeCards = new ArrayList<>();
     private List<Attack> pokeCardAttack = new ArrayList<>();
@@ -28,6 +30,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         for (int i = 0; i <= 100; i++) {
             addAttack("fulguro poing" + i);
