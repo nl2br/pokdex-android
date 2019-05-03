@@ -2,6 +2,8 @@ package fr.mds.pokedex.activity;
 
 import android.app.Activity;
 import android.app.SearchManager;
+import android.support.design.widget.Snackbar;
+import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 //import android.support.v7.widget.SearchView;
@@ -17,6 +19,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PokeListRecyclerViewAdapter pokeListRecyclerViewAdapter;
     private boolean isSearching = false;
+
+    private Merlin merlin;
+    private boolean hasLostConnexion = false;
 
     public static final String TAG = "pokedex";
 
@@ -121,12 +130,53 @@ public class MainActivity extends AppCompatActivity {
         super.onNewIntent(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        merlin.bind();
+    }
+
+    @Override
+    protected void onPause() {
+        merlin.unbind();
+        super.onPause();
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // ajout merlin pour gérer la connxion / deconnexion
+        merlin = new Merlin.Builder().withAllCallbacks().build(this);
+        merlin.registerConnectable(new Connectable() {
+            @Override
+            public void onConnect() {
+                // Do something you haz internet!
+                Log.d(TAG, "internet ok");
+                hasLostConnexion = false;
+                final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) MainActivity.this
+                        .findViewById(android.R.id.content)).getChildAt(0);
+                Snackbar snackbar = Snackbar.make(viewGroup,"Internet ok",Snackbar.LENGTH_SHORT);
+                snackbar.show();
+
+            }
+        });
+        merlin.registerDisconnectable(new Disconnectable() {
+            @Override
+            public void onDisconnect() {
+                Log.d(TAG, "internet ko");
+                hasLostConnexion = true;
+                final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) MainActivity.this
+                        .findViewById(android.R.id.content)).getChildAt(0);
+                Snackbar snackbar = Snackbar.make(viewGroup,"no Internet",Snackbar.LENGTH_SHORT);
+                snackbar.show();
+            }
+        });
+
 
         // ajout toolbar
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));

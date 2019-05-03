@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.mds.pokedex">
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,5 +24,9 @@
         </activity>
 
         <activity android:name="fr.mds.pokedex.activity.DetailPokeCardActivity"></activity>
+
+        <service
+            android:exported="false"
+            android:name="com.novoda.merlin.MerlinService" />
     </application>
 </manifest>
