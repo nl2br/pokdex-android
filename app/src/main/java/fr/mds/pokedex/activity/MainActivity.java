@@ -117,9 +117,6 @@ public class MainActivity extends AppCompatActivity {
                 pokeCards.clear();
             }
 
-
-
-
         }
         super.onNewIntent(intent);
     }
