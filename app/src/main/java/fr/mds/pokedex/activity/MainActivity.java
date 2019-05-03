@@ -112,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
 
                 pokeCards.addAll(pokeCardsFiltered);
                 pokeListRecyclerViewAdapter.notifyDataSetChanged();
+                pokeCardsFiltered.clear();
+            }else{
+                pokeCards.clear();
             }
 
 
