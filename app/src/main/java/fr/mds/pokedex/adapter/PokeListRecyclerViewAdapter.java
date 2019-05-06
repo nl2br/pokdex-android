@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class PokeListRecyclerViewAdapter extends RecyclerView.Adapter<PokeListVi
             // onClickListener.onClick(v);
             // explicit car on spécifie quelle classe utliser
             Intent intent = new Intent(currentActivity, DetailPokeCardActivity.class);
-            Log.d(TAG, "onClick " + position);
+            Log.d(TAG, "onClick " + holder.getAdapterPosition());
             intent.putExtra("position",holder.getAdapterPosition());
             intent.putExtra("pokeCard", pokeCards.get(holder.getAdapterPosition()));
             //startActivity(intent);
@@ -65,6 +67,7 @@ public class PokeListRecyclerViewAdapter extends RecyclerView.Adapter<PokeListVi
     public void onBindViewHolder(@NonNull PokeListViewHolder holder, int position) {
         PokeCard currentPokeCard = pokeCards.get(position);
         holder.getCardViewInfoText().setText(currentPokeCard.getName());
+        Picasso.get().load(currentPokeCard.getImageUrl()).into(holder.getIw_img_card());
     }
 
     @Override

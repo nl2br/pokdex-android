@@ -9,8 +9,11 @@ import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,7 @@ public class DetailPokeCardActivity extends Activity {
     protected Button bt_more_detail;
     protected Button bt_no_detail;
     protected ConstraintLayout cl_detail;
+    protected ImageView iv_img_card;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class DetailPokeCardActivity extends Activity {
         tv_card_id = findViewById(R.id.tv_card_id);
         tv_card_type = findViewById(R.id.tv_card_type);
         tv_card_hp = findViewById(R.id.tv_card_hp);
+        iv_img_card = findViewById(R.id.iv_img_card);
         ll_more_detail = findViewById(R.id.ll_more_detail);
         bt_more_detail = findViewById(R.id.bt_more_detail);
         bt_no_detail = findViewById(R.id.bt_no_detail);
@@ -75,27 +80,17 @@ public class DetailPokeCardActivity extends Activity {
         // recuperer les datas envoyées
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
-/*            Integer position = null;
-            position = extras.getInt("position");
-            Log.d(TAG, "Position: " + position );
-
-            PokeCard pokeCard = (PokeCard) extras.getSerializable("pokeCard");
-            Log.d(TAG, "current pokeCard: " + pokeCard);
-
-            currentCard = pokeCard;
-
-            tv_card_name.setText(pokeCard.getName());
-            tv_card_id.setText(pokeCard.getId());
-            tv_card_type.setText(pokeCard.getTypes().toString());
-            tv_card_hp.setText(pokeCard.getHp());*/
 
             PokeCard pokeCard = (PokeCard) extras.getSerializable("pokeCard");
             Log.d(TAG, "pokeCard: " + pokeCard);
 
             tv_card_name.setText(pokeCard.getName());
             tv_card_id.setText(pokeCard.getId());
-            tv_card_type.setText(pokeCard.getTypes().toString());
+            if(pokeCard.getTypes().size() != 0){
+                tv_card_type.setText(pokeCard.getTypes().get(0).toString());
+            }
             tv_card_hp.setText(pokeCard.getHp());
+            Picasso.get().load(pokeCard.getImageUrl()).into(iv_img_card);
 
             TextView tv_attack = new TextView(this);
             tv_attack.setText("LIST ATTACKS :");

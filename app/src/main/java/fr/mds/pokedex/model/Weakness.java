@@ -1,6 +1,8 @@
 package fr.mds.pokedex.model;
 
-public class Weakness {
+import java.io.Serializable;
+
+public class Weakness implements Serializable {
     private String type;
 
     public Weakness(String type){

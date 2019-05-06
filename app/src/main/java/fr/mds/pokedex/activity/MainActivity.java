@@ -32,6 +32,11 @@ import fr.mds.pokedex.adapter.PokeListRecyclerViewAdapter;
 import fr.mds.pokedex.R;
 import fr.mds.pokedex.model.Attack;
 import fr.mds.pokedex.model.PokeCard;
+import fr.mds.pokedex.rest.container.PokeContainer;
+import fr.mds.pokedex.rest.service.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PokeListRecyclerViewAdapter pokeListRecyclerViewAdapter;
     private boolean isSearching = false;
+    private int currentPage = 1;
 
     private Merlin merlin;
     private boolean hasLostConnexion = false;
@@ -183,10 +189,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        for (int i = 0; i <= 100; i++) {
+/*        for (int i = 0; i <= 100; i++) {
             addAttack("fulguro poing" + i);
             addPokeCard("test" + i, "0000"+i, "Pokemon", "100", pokeCardAttack);
-        }
+        }*/
+
+        callPokeAPI();
 
         pokeCardsOriginal.addAll(pokeCards);
 
@@ -207,10 +215,30 @@ public class MainActivity extends AppCompatActivity {
                 int totalItemCount = gridLayoutManager.getItemCount();
 
                 if( (visibleCount + firstVisibleItemPoistion) >= totalItemCount && !isSearching){
-                    Log.d(TAG, "endless");
-                    pokeCards.addAll(pokeCards);
-                    pokeListRecyclerViewAdapter.notifyDataSetChanged();
+                    currentPage = currentPage + 1;
+                    Log.d(TAG, "endless, current page = " + currentPage);
+                    callPokeAPI();
                 }
+            }
+        });
+    }
+
+    private void callPokeAPI() {
+        Call<PokeContainer> retrofitCall = RetrofitClient.getService().getCards(currentPage);
+        retrofitCall.enqueue(new Callback<PokeContainer>() {
+            @Override
+            public void onResponse(Call<PokeContainer> call, Response<PokeContainer> response) {
+                Log.d(TAG, "retrofit onResponse" + response.body());
+                PokeContainer res = response.body();
+                pokeCardsOriginal.addAll(res.getCards());
+                pokeCards.clear();
+                pokeCards.addAll(pokeCardsOriginal);
+                pokeListRecyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<PokeContainer> call, Throwable t) {
+                Log.d(TAG, "failure retrofit");
             }
         });
     }

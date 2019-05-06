@@ -27,12 +27,11 @@
         app:layout_constraintGuide_begin="580dp" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_img_card"
         android:layout_width="280dp"
         android:layout_height="398dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/card"
         android:scaleType="fitStart"
         android:elevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"

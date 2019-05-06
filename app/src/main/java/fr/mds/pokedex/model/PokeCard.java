@@ -93,4 +93,9 @@ public class PokeCard implements Serializable {
     public void setWeaknesses(List<Weakness> weaknesses) {
         this.weaknesses = weaknesses;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

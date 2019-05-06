@@ -1,6 +1,8 @@
 package fr.mds.pokedex.model;
 
-public class Resistance {
+import java.io.Serializable;
+
+public class Resistance implements Serializable {
     private String type;
 
     public Resistance(String type){
