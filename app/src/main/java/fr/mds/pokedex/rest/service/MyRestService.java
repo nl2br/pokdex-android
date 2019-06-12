@@ -8,4 +8,8 @@ import retrofit2.http.Query;
 public interface MyRestService {
     @GET("cards")
     Call<PokeContainer> getCards(@Query("page") int page);
+
+    @GET("cards")
+    Call<PokeContainer> getCard(@Query("name") String name);
+
 }

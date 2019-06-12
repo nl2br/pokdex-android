@@ -103,36 +103,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onNewIntent(Intent intent) {
-        Log.d(TAG, "Intent incoming " + intent);
         if(Intent.ACTION_SEARCH.equals(intent.getAction())){
             String query = intent.getStringExtra(SearchManager.QUERY);
             Log.d(TAG, "Search " + query);
-
-            // rechercher l'élément dans la liste
-            for(int i = 0; i < pokeCards.size(); i++){
-                // Log.d(TAG, "compare " + pokeCards.get(i).getName());
-                if(pokeCards.get(i).getName().equals(query)){
-                    Log.d(TAG, "find " + pokeCards.get(i).getName());
-                    pokeCardsFiltered.add(pokeCards.get(i));
+            pokeCardsFiltered.clear();
+            Call<PokeContainer> retrofitCall = RetrofitClient.getService().getCard(query);
+            retrofitCall.enqueue(new Callback<PokeContainer>() {
+                @Override
+                public void onResponse(Call<PokeContainer> call, Response<PokeContainer> response) {
+                    Log.d(TAG, "retrofit onResponse" + response.body());
+                    PokeContainer res = response.body();
+                    pokeCardsFiltered.addAll(res.getCards());
+                    pokeCards.clear();
+                    pokeCards.addAll(pokeCardsFiltered);
+                    pokeListRecyclerViewAdapter.notifyDataSetChanged();
                 }
-            }
 
-            // réduire la liste
-            Log.d(TAG, "count filtered " + pokeCardsFiltered.size());
-            if(pokeCardsFiltered.size() != 0){
-                pokeCards.clear();
-                Log.d(TAG, "into the filtered " + pokeCards.size());
+                @Override
+                public void onFailure(Call<PokeContainer> call, Throwable t) {
+                    Log.d(TAG, "failure retrofit");
+                }
+            });
 
-                pokeCards.addAll(pokeCardsFiltered);
-                pokeListRecyclerViewAdapter.notifyDataSetChanged();
-                pokeCardsFiltered.clear();
-            }else{
-                pokeCards.clear();
-            }
+
 
         }
+
+
         super.onNewIntent(intent);
     }
 
